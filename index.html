@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta name="description" content="Why web workers">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link href="styles.css" rel="stylesheet" type="text/css" />
+    <title>Why web workers</title>
+</head>
+<body>
+    <h1>Why Web Workers</h1>
+    <p class="summary">This page demonstrates a reason of usage Web Workers. You see a simple animated element.
+        And two buttons for running the same task. Is does not matter what the task exactly do, let's say it's
+        heavy operation from the time point of view. So, if we start this task it will cause to freeze the page and
+        makes it unresponsive for a moment. UI Developers should care about UI response time. So, when you have such
+        situation in your application, it's better to delegate it to backend/API. But if you still need to do it on UI
+        you can run such tasks inside web worker. Web worker will not freeze UI because code will be executed on the
+        separate thread. Try the example to see the difference. See more information on official
+        <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API" target="_blank">
+            MDN Web Workers API
+        </a>.
+    </p>
+    <section>
+        <button id="run">Start heavy task without worker</button>
+        <button id="runViaWorker">Start heavy task via worker</button>
+        Result: <span class="result"></span>
+    </section>
+    <h1 class="animated">Just an animated block</h1>
+</body>
+<script src="example.js"></script>
+</html>

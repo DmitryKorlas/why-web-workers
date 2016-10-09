@@ -1,0 +1,48 @@
+html, body {
+  background: radial-gradient(ellipse at center, #9CCC65 0%, #558B2F 100%);
+  height: 100%;
+  overflow: hidden;
+}
+h1 {
+  font-size: 5em;
+}
+.summary {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 24px;
+  opacity: 0.8;
+}
+
+.animated {
+  animation-duration: 3s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out;
+  text-align: center;
+}
+.animated.slide-in {
+  animation-name: slidein;
+}
+.animated.slide-out {
+  animation-name: slideout;
+}
+
+@keyframes slidein {
+  from {
+    margin: 25%;
+    background-color: rgba(48, 79, 254, 0.8);
+  }
+
+  to {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+}
+
+@keyframes slideout {
+  from {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  to {
+    margin: 25%;
+    background-color: rgba(48, 79, 254, 0.8);
+  }
+}
