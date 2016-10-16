@@ -4,28 +4,124 @@
     <meta name="description" content="Why web workers">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css" />
     <link href="styles.css" rel="stylesheet" type="text/css" />
     <title>Why web workers</title>
 </head>
 <body>
-    <h1>Why Web Workers</h1>
-    <p class="summary">This page demonstrates a reason of usage Web Workers. You see a simple animated element.
-        And two buttons for running the same task. Is does not matter what the task exactly do, let's say it's
-        heavy operation from the time point of view. So, if we start this task it will cause to freeze the page and
-        makes it unresponsive for a moment. UI Developers should care about UI response time. So, when you have such
-        situation in your application, it's better to delegate it to backend/API. But if you still need to do it on UI
-        you can run such tasks inside web worker. Web worker will not freeze UI because code will be executed on the
-        separate thread. Try the example to see the difference. See more information on official
-        <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API" target="_blank">
-            MDN Web Workers API
-        </a>.
-    </p>
-    <section>
-        <button id="run">Start heavy task without worker</button>
-        <button id="runViaWorker">Start heavy task via worker</button>
-        Result: <span class="result"></span>
+    <header>
+        <div class="container">
+            <h1>Why Web Workers</h1>
+        </div>
+    </header>
+    <div class="jumbotron">
+        <div class="container">
+            <p class="lead">This page demonstrates a reason of usage Web Workers.</p>
+            <p>
+                Try the examples below to feel the difference. See more information on official
+                <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API" target="_blank">
+                    MDN Web Workers API
+                </a>.
+                <br/>Please just use the latest version of browser. I skip any polyfills/transpilers related
+                handling this time to concentrate attention on example.
+            </p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1 class="display-1">Example #1 - Heavy task</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3">
+                <h6 class="animated">Just an animated block</h6>
+            </div>
+            <div class="col-xs-9">
+                <p>You see a simple animated element.
+                    And button for running some task. Is does not matter what the task exactly do, let's say it's
+                    heavy operation from the cpu point of view. So, if we start this task it will cause to freeze the
+                    page and makes it unresponsive for a moment. UI developers should care about UI response time. So,
+                    when you have such situation in your application, it's better to delegate it to backend/API. But if
+                    you still need to do it on UI you can run such tasks inside web worker. Web worker will not freeze
+                    UI because code will be executed on the separate thread.
+                </p>
+                <form id="exampleHeavyTask">
+                    <p class="lead">
+                        <button type="submit" class="btn btn-primary" href="#" role="button" id="run">run heavy task</button>
+                        Result: <span class="result"></span>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" name="useWebWorker">
+                                use web worker
+                            </label>
+                        </div>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <section class="partition">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1 class="display-1">Example #2 - Github gists view</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <h6 class="animated">Just an animated block</h6>
+                </div>
+                <div class="col-xs-9">
+                    <p>This example fetch few files from the github <a href="https://gist.github.com/discover">gists</a>
+                        and show it in random order.
+                        Each file truncated and displayed on separate card. Code of file highlighted. So the task which
+                        probably MAY freeze UI here - is syntax highlighting. Sure, it's mostly depends on client side
+                        hardware, the example provide form to change default settings.
+                    </p>
+                    <form id="exampleGists">
+                        <div class="form-group row">
+                            <div class="col-sm-4 col-md-2">
+                                <label for="filesAmount" class="col-form-label" title="files to show">Files</label>
+                                <input class="form-control" type="number" min="1" max="300" value="30" id="filesAmount" name="filesAmount"/>
+                            </div>
+                            <div class="col-sm-4 col-md-2">
+                                <label for="symbolsAmount" class="col-form-label" title="symbols per file">Symbols</label>
+                                <input class="form-control" type="number" min="1" value="1500" id="symbolsAmount" name="symbolsAmount"/>
+                            </div>
+                            <div class="col-sm-4 col-md-4">
+                                <label>&nbsp;</label><br/>
+                                <button type="submit" class="btn btn-primary" href="#" role="button">show gists</button>
+                                <span class="text-danger">(traffic)</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-xs-12">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" name="useWebWorker">
+                                    use web worker
+                                </label>
+                            </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="gistsListDisplay"></div>
+                </div>
+            </div>
+        </div>
     </section>
-    <h1 class="animated">Just an animated block</h1>
 </body>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/github-gist.min.css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.4/lodash.min.js"></script>
+<script src="HeavyTaskExample.js"></script>
+<script src="GistsExample.js"></script>
 <script src="example.js"></script>
 </html>
